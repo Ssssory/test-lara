@@ -25,7 +25,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/tasks', 'TaskController@getTasks');
 Route::post('/task', 'TaskController@create');
-Route::delete('/task/{id}', 'TaskController@delete');
+Route::post('/task/done/{id}', 'TaskController@done');
+Route::delete('/task/delete/{id}', 'TaskController@delete');
 
 
 Route::get('/ed/{name}', function ($name) {
