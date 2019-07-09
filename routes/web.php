@@ -22,3 +22,12 @@ Route::get('/test', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/tasks', 'TaskController@getTasks');
+Route::post('/task', 'TaskController@create');
+Route::delete('/task/{id}', 'TaskController@delete');
+
+
+Route::get('/ed/{name}', function ($name) {
+    return 'Hello '. $name;
+});
