@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\TasksDone;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -15,8 +16,10 @@ class TaskController extends Controller
     public function getTasks()
     {
         $tasks = Task::all();
+        $done = TasksDone::all();
         return view('tasks',[
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'done' => $done,
         ]);
     }
 
@@ -35,6 +38,19 @@ class TaskController extends Controller
     public function delete(Request $request, $id)
     {
         $task = Task::find($id);
+
+        $task->delete();
+
+        return redirect('/tasks');
+    }
+
+    public function done(Request $request, $id)
+    {
+        $task = Task::findOrFail($id);
+
+        $request->user()->done()->create([
+            'name' => $task->name
+        ]);
 
         $task->delete();
 

@@ -46,6 +46,7 @@
             <tr>
                 <td>date</td>
                 <td>Task name</td>
+                <td>done</td>
                 <td> - </td>
             </tr>
         </thead>
@@ -55,10 +56,16 @@
                     <td>{{ ($task->created_at)->format('d m H:i') }}</td>
                     <td>{{$task->name}}</td>
                     <td>
-                        <form method="post" action="/task/{{$task->id}}">
+                        <form method="post" action="/task/done/{{$task->id}}">
+                            {{csrf_field()}}
+                            <input type="submit" value="complete" class="btn btn-success">
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="/task/delete/{{$task->id}}">
                             {{csrf_field()}}
                             {{method_field('delete')}}
-                            <input type="submit" value="delete"class="btn btn-danger">
+                            <input type="submit" value="delete" class="btn btn-danger">
                         </form>
                     </td>
                 </tr>
@@ -68,6 +75,29 @@
 @else
     <h1>No tasks</h1>
 @endif
+    @if( count($done) > 0 )
+        <h3>Done tasks!</h3>
+        <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+                <td>date</td>
+                <td>Task name</td>
+                <td>  </td>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($done as $task)
+                <tr>
+                    <td>{{ ($task->created_at)->format('d m H:i') }}</td>
+                    <td>{{$task->name}}</td>
+                    <td>
+                        done
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    @endif
 </div>
 </body>
 </html>
